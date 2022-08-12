@@ -27,20 +27,24 @@ int main() {
     double resLimA = f(varA, varB, varC, varD, limA);
     double resLimB = f(varA, varB, varC, varD, limB);
     double b = resLimB - resLimA;
-    double h = (limA-limB);
+    double h = abs((limA-limB));
     double areaN = b*h;
+    printf("area: %lf\n",areaN);
     h = h/2;
     resLimA = f(varA, varB, varC, varD, limA);
     resLimB = f(varA, varB, varC, varD, h);
     double areaN1 = b*h;
-
-    while(abs(areaN-areaN1) < 0.000001) {
+    
+    printf("area: %lf\n",areaN1);
+    
+    while(areaN-areaN1 > 0.000001) {
         areaN = areaN1;
         h = h/2;
         resLimA = f(varA, varB, varC, varD, limA);
         resLimB = f(varA, varB, varC, varD, h);
         areaN1 = b*h;
-        
+        printf("area: %lf\n",areaN1);
+  
     }
 
     printf("A area do trapézio é: %lf\n", areaN1);
