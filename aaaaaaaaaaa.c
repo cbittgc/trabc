@@ -2,13 +2,40 @@
 #include<stdlib.h>
 #include<math.h>
 
-double f(double varA, double varB, double varC, double varD, double x) {
+double varA,varB,varC,varD;
+
+double f(double x) {
     return varA*pow(x,3)+varB*pow(x,2)+varC*x+varD;
+}
+
+double area(double limA, double limB) {
+    double resLimA = f(limA);
+    double resLimB = f(limB);
+    double h = resLimB - resLimA;
+    double b = fabs((limA-limB));
+    return b*h;
+}
+
+double integral(double limA, double limB) {
+    double b = fabs((limA-limB));
+    double areaAnterior = -1;
+    double areaAtual;
+    do {
+        printf("rodou");
+        areaAnterior = areaAtual;
+        areaAtual = 0;
+        for(double x = limA; x < limB; x+=b){
+            areaAtual += area(x, x+b);
+        }
+        b /= 2;
+        printf("aAt: %lf\naAn: %lf\nfabs: %lf\n",areaAtual,areaAnterior,fabs(areaAnterior - areaAtual));
+    } while(fabs(areaAnterior - areaAtual) > 0.000001);
+    
+    return areaAtual;
 }
 
 
 int main() {
-    double varA,varB,varC,varD;
     double limA, limB;
 
     printf("Digite o valor de A: ");
@@ -24,30 +51,7 @@ int main() {
     printf("Digite o valor de limite direito: ");
     scanf("%lf", &limB);
     
-    double resLimA = f(varA, varB, varC, varD, limA);
-    double resLimB = f(varA, varB, varC, varD, limB);
-    double b = resLimB - resLimA;
-    double h = abs((limA-limB));
-    double areaN = b*h;
-    printf("area: %lf\n",areaN);
-    h = h/2;
-    resLimA = f(varA, varB, varC, varD, limA);
-    resLimB = f(varA, varB, varC, varD, h);
-    double areaN1 = b*h;
-    
-    printf("area: %lf\n",areaN1);
-    
-    while(areaN-areaN1 > 0.000001) {
-        areaN = areaN1;
-        h = h/2;
-        resLimA = f(varA, varB, varC, varD, limA);
-        resLimB = f(varA, varB, varC, varD, h);
-        areaN1 = b*h;
-        printf("area: %lf\n",areaN1);
-  
-    }
-
-    printf("A area do trapézio é: %lf\n", areaN1);
+    printf("%lf",integral(limA, limB));
 
     return 0;
 }
