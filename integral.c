@@ -10,8 +10,7 @@ double f(double x) {
 
 double area(double limA, double limB) {
     double resLimA = f(limA);
-    double resLimB = f(limB);
-    double h = resLimA;
+    double h = f(limA);
     double b = fabs((limA-limB));
     return b*h;
 }
